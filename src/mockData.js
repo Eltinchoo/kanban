@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 const mockData = [
   {
     id: uuidv4(),
-    title: "Por hacer",
+    title: "📝 Por hacer",
     taks: [
       {
         id: uuidv4(),
@@ -17,7 +17,7 @@ const mockData = [
   },
   {
     id: uuidv4(),
-    title: "En proceso",
+    title: "✒️ En proceso",
     taks: [
       {
         id: uuidv4(),
@@ -32,7 +32,7 @@ const mockData = [
 
   {
     id: uuidv4(),
-    title: "Completado",
+    title: "✔️ Completado",
     taks: [
       {
         id: uuidv4(),
