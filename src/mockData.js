@@ -1,44 +1,24 @@
-import { v4 as uuidv4 } from "uuid";
-
 const mockData = [
   {
-    id: uuidv4(),
+    id: "todo", // Se usan IDs fijos para evitar que cambien en cada render
     title: "📝 Por hacer",
-    taks: [
-      {
-        id: uuidv4(),
-        title: "Incribirme a JS",
-      },
-      {
-        id: uuidv4(),
-        title: "Curso de React",
-      },
+    tasks: [
+      { id: "task-1", title: "Incribirme a JS" },
+      { id: "task-2", title: "Curso de React" },
     ],
   },
   {
-    id: uuidv4(),
+    id: "in-progress",
     title: "✒️ En proceso",
-    taks: [
-      {
-        id: uuidv4(),
-        title: "Curso de JS",
-      },
-      {
-        id: uuidv4(),
-        title: "Curso de React",
-      },
+    tasks: [
+      { id: "task-3", title: "Curso de JS" },
+      { id: "task-4", title: "Curso de React" },
     ],
   },
-
   {
-    id: uuidv4(),
+    id: "done",
     title: "✔️ Completado",
-    taks: [
-      {
-        id: uuidv4(),
-        title: "Curso de HTML",
-      },
-    ],
+    tasks: [{ id: "task-5", title: "Curso de HTML" }],
   },
 ];
 
