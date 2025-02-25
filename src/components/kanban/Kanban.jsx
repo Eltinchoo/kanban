@@ -2,40 +2,35 @@ import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import mockData from "../../mockData";
 import Card from "../card/Card";
 import { useState } from "react";
-import "./kanban.scss";
 
 export default function Kanban() {
-  // Estado para manejar los datos del tablero Kanban
   const [data, setData] = useState(mockData);
 
-  // Función que se ejecuta cuando termina un evento de arrastre
   const onDragEnd = (result) => {
-    if (!result.destination) return; // Si no hay destino, no se hace nada
+    if (!result.destination) return;
 
     const { source, destination } = result;
 
     setData((prevData) => {
-      const sourceColIndex = prevData.findIndex(
+      // Copia profunda de los datos para evitar mutaciones
+      const newData = JSON.parse(JSON.stringify(prevData));
+
+      const sourceColIndex = newData.findIndex(
         (e) => e.id === source.droppableId
       );
-      const destColIndex = prevData.findIndex(
+      const destColIndex = newData.findIndex(
         (e) => e.id === destination.droppableId
       );
 
-      const sourceCol = prevData[sourceColIndex];
-      const destCol = prevData[destColIndex];
+      if (sourceColIndex === -1 || destColIndex === -1) return prevData;
 
-      const sourceTasks = [...sourceCol.tasks];
-      const destTasks = [...destCol.tasks];
+      const sourceCol = newData[sourceColIndex];
+      const destCol = newData[destColIndex];
 
-      const [removed] = sourceTasks.splice(source.index, 1);
-      destTasks.splice(destination.index, 0, removed);
+      const [movedTask] = sourceCol.tasks.splice(source.index, 1);
+      destCol.tasks.splice(destination.index, 0, movedTask);
 
-      const updatedData = [...prevData];
-      updatedData[sourceColIndex] = { ...sourceCol, tasks: sourceTasks };
-      updatedData[destColIndex] = { ...destCol, tasks: destTasks };
-
-      return updatedData;
+      return newData;
     });
   };
 
@@ -67,7 +62,7 @@ export default function Kanban() {
                           {...provided.dragHandleProps}
                           style={{
                             ...provided.draggableProps.style,
-                            opacity: snapshot.isDragging ? "0.5" : "1",
+                            opacity: snapshot.isDragging ? 0.9 : 1,
                           }}
                         >
                           <Card task={task} />
@@ -76,7 +71,7 @@ export default function Kanban() {
                     </Draggable>
                   ))}
                   {provided.placeholder}{" "}
-                  {/* 🔥 Esto es necesario para evitar errores */}
+                  {/* Necesario para mantener el espacio al arrastrar */}
                 </div>
               </div>
             )}
